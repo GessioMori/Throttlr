@@ -9,6 +9,7 @@
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <ProjectReference Include="..\Throttlr.Core\Throttlr.Core.csproj" />
+    <ProjectReference Include="..\Throttlr.Infra\Throttlr.Infra.csproj" />
   </ItemGroup>
 
 </Project>

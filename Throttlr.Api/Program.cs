@@ -1,7 +1,10 @@
+using Throttlr.Api.Registers;
 using Throttlr.Application.Forwarders;
 using Throttlr.Application.Services;
 using Throttlr.Core.Interfaces;
+using Throttlr.Infra.Interfaces;
 using Throttlr.Infra.Json;
+using Throttlr.Infra.MongoDb;
 
 namespace Throttlr.Api;
 
@@ -14,7 +17,7 @@ public class Program
         builder.Services.AddControllers();
         builder.Services.AddOpenApi();
 
-        builder.Services.AddSingleton<IRouteService, JsonRouteService>();
+        builder.Services.AddInfrastructure(builder.Configuration);
         builder.Services.AddSingleton<IEnvironmentService, AspNetCoreEnvironmentService>();
         builder.Services.AddHttpClient<IRequestForwarder, HttpClientRequestForwarder>();
         builder.Services.AddScoped<IReverseProxyService, ReverseProxyService>();

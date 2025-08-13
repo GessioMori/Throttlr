@@ -1,13 +1,14 @@
 ﻿using Throttlr.Core.Entities;
 using Throttlr.Core.Interfaces;
+using Throttlr.Infra.Interfaces;
 
 namespace Throttlr.Application.Services;
 public class ReverseProxyService : IReverseProxyService
 {
-    private readonly IRouteService _routeService;
+    private readonly IRouteConfigRepository _routeService;
     private readonly IRequestForwarder _requestForwarder;
 
-    public ReverseProxyService(IRouteService routeService, IRequestForwarder requestForwarder)
+    public ReverseProxyService(IRouteConfigRepository routeService, IRequestForwarder requestForwarder)
     {
         this._routeService = routeService ?? throw new ArgumentNullException(nameof(routeService));
         this._requestForwarder = requestForwarder ?? throw new ArgumentNullException(nameof(requestForwarder));
@@ -15,7 +16,7 @@ public class ReverseProxyService : IReverseProxyService
 
     public async Task<HttpResponseMessage?> HandleRequestAsync(ProxyRequest proxyRequest)
     {
-        RouteConfig? routeConfig = this._routeService.GetRoute(proxyRequest.Path, proxyRequest.Method);
+        RouteConfig? routeConfig = await this._routeService.GetByPathAsync(proxyRequest.Path);
 
         if (routeConfig is null)
         {
