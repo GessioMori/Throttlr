@@ -1,0 +1,12 @@
+[
+  {
+    "Path": "/users",
+    "UpstreamUrl": "https://dummyjson.com/test",
+    "HttpVerb": "GET"
+  },
+  {
+    "Path": "/posts",
+    "UpstreamUrl": "https://jsonplaceholder.typicode.com/posts",
+    "HttpVerb": "POST"
+  }
+]
