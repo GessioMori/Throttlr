@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
+using Throttlr.Infra.MongoDb.Mappings;
 
 namespace Throttlr.Infra.MongoDb;
+
 public static class MongoDbRegistration
 {
     public static IServiceCollection AddMongoDb(this IServiceCollection services, IConfiguration configuration)
@@ -15,6 +17,8 @@ public static class MongoDbRegistration
         services.AddSingleton<IMongoClient>(sp => new MongoClient(settings.ConnectionString));
 
         services.AddSingleton(sp => sp.GetRequiredService<IMongoClient>().GetDatabase(settings.DatabaseName));
+
+        MongoDbMappings.RegisterMappings();
 
         return services;
     }
