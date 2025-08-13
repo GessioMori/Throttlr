@@ -15,6 +15,13 @@ public class ReverseProxyMiddleware
     public async Task InvokeAsync(HttpContext context, IReverseProxyService reverseProxyService)
     {
         ArgumentNullException.ThrowIfNull(context);
+
+        if (context.Request.Path.StartsWithSegments("/api"))
+        {
+            await this._next(context);
+            return;
+        }
+
         ArgumentNullException.ThrowIfNull(reverseProxyService);
 
         ProxyRequest proxyRequest = new(context.Request.Path,

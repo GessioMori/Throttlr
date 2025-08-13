@@ -1,6 +1,7 @@
 ﻿using Throttlr.Core.Entities;
 using Throttlr.Core.Interfaces;
 using Throttlr.Infra.Interfaces;
+using Throttlr.Shared.OperationResult;
 
 namespace Throttlr.Application.Services;
 public class ReverseProxyService : IReverseProxyService
@@ -16,13 +17,13 @@ public class ReverseProxyService : IReverseProxyService
 
     public async Task<HttpResponseMessage?> HandleRequestAsync(ProxyRequest proxyRequest)
     {
-        RouteConfig? routeConfig = await this._routeService.GetByPathAsync(proxyRequest.Path);
+        OperationResult<RouteConfig> result = await this._routeService.GetByPathAndMethodAsync(proxyRequest.Path, proxyRequest.Method);
 
-        if (routeConfig is null)
+        if (!result.Success || result.Data is null)
         {
             return null;
         }
 
-        return await this._requestForwarder.ForwardAsync(proxyRequest, routeConfig);
+        return await this._requestForwarder.ForwardAsync(proxyRequest, result.Data);
     }
 }

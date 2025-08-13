@@ -9,6 +9,7 @@
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="MongoDB.Driver" Version="3.4.2" />
+    <ProjectReference Include="..\..\Throttlr.Shared\Throttlr.Shared.csproj" />
     <ProjectReference Include="..\Throttlr.Core\Throttlr.Core.csproj" />
   </ItemGroup>
 

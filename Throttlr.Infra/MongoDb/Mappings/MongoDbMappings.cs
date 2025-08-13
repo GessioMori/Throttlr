@@ -21,7 +21,8 @@ public static class MongoDbMappings
 
             cm.MapIdMember(c => c.Id)
             .SetSerializer(new StringSerializer(BsonType.ObjectId))
-            .SetElementName("_id");
+            .SetElementName("_id")
+            .SetIdGenerator(MongoDB.Bson.Serialization.IdGenerators.StringObjectIdGenerator.Instance);
 
             cm.MapMember(c => c.Path).SetElementName("path")
                 .SetIsRequired(true);
